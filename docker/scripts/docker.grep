@@ -1,6 +1,6 @@
 FROM debug/grep
 ENV SUBJECT grep
-RUN sudo apt-get install -y gdb valgrind
+# RUN sudo apt-get install -y gdb valgrind
 ADD scripts/prepareVM.sh .
 ADD scripts/test.grep.54d55bba.patch .
 ADD scripts/patch.grep.sh .
