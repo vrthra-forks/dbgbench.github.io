@@ -14,9 +14,9 @@ if [ $(docker images | grep -c "CREATED") -eq 0 ]; then
   echo "Run boot2docker to set up docker environment."
   exit 1
 fi
-if [ $(docker images | grep -c "debugstudy$subject ") -eq 0 ]; then
+if [ $(docker images | grep -c "ddset/$subject ") -eq 0 ]; then
   echo "Installing image.. This will be done only once and may take up to one hour."
-  docker build -t debugstudy$subject -f scripts/docker.$subject . || exit 1
+  docker build -t ddset/$subject -f scripts/docker.$subject . || exit 1
 fi
 
 exit_code=0
@@ -26,16 +26,16 @@ if [ $(docker ps | grep -c "$name") -ne 0 ]; then
   exit 0
 fi
 
-#if [ $(docker ps | grep -c "debugstudy$subject ") -ne 0 ]; then
-#  echo "An instance of 'debugstudy' is already running ($(docker ps | grep "debugstudy$subject " | cut -c-12))"
+#if [ $(docker ps | grep -c "ddset/$subject ") -ne 0 ]; then
+#  echo "An instance of 'ddset' is already running ($(docker ps | grep "ddset/$subject " | cut -c-12))"
 #  echo "You can use VNCViewer from your Desktop or a different terminal window to access: "
 #  echo "$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${name}):5900 (password: corebench)"
 #  echo ""
 #  echo "Connecting .."
 #  if [ -z "$2" ]; then
-#    docker exec -it $(docker ps | grep "debugstudy$subject " | cut -c-12) bash
+#    docker exec -it $(docker ps | grep "ddset/$subject " | cut -c-12) bash
 #  else
-#    echo "$2" | docker exec -i $(docker ps | grep "debugstudy$subject " | cut -c-12) bash
+#    echo "$2" | docker exec -i $(docker ps | grep "ddset/$subject " | cut -c-12) bash
 #    exit_code=$?
 #  fi
 #
@@ -43,7 +43,7 @@ fi
 #fi
 
 printf "Running container: "
-docker run -dt --name ${name} -v $(pwd):/shared --dns 8.8.8.8 --dns 8.8.4.4 debugstudy${subject} | cut -c-12
+docker run -dt --name ${name} -v $(pwd):/shared --dns 8.8.8.8 --dns 8.8.4.4 ddset/${subject} | cut -c-12
 echo "Now use VNCViewer from your Desktop or a different terminal window to access: "
 echo "$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' ${name}):5900 (password: corebench)"
 echo
@@ -52,9 +52,10 @@ echo Use the '/shared'-folder for scripts and data which you would like to keep.
 echo
 echo Connecting..
 if [ -z "$3" ]; then
-  docker exec -it $name bash
+  echo execute: docker exec -it $name bash
 else 
-  echo "$3" | docker exec -i $name bash
+  #echo "$3" | docker exec -i $name bash
+  echo check the run.sh script
   exit_code=$?
 fi
 exit $exit_code
