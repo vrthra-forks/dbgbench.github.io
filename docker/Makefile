@@ -38,4 +38,4 @@ init: init-find init-grep
 	@echo init done
 
 rm: rm-find rm-grep
-	@ecno clobber done
+	@echo clobber done
