@@ -1,0 +1,1 @@
+sudo docker ps --filter ancestor=ddset/find --format 'table {{.Image}} {{.ID}} {{.Names}}'
